@@ -72,19 +72,52 @@ void autonomous(void) {
 /*---------------------------------------------------------------------------*/
 
 void usercontrol(void) {
-  // User control code here, inside the loop
+
+bool intakeCur = true;
+bool scoreCur = false;
+int errorTray;
+int trayVoltage = 0;
+double kpTray = -.4175;
+int targetTray = -450;
+int positionTray;
+
   while (1) {
-    // This is the main execution loop for the user control program.
-    // Each time through the loop your program should update motor + servo
-    // values based on feedback from the joysticks.
+/////////////////INTAKE CONTROLS//////////////////
+if(Controller1.ButtonR2.pressing()){
+  //Intake
+  intakeLeft.spin(forward, -127, volt);
+  intakeRight.spin(forward, -127, volt);
+}else if (Controller1.ButtonR1.pressing()){
+  //outTake
+  intakeLeft.spin(forward, 127, volt);
+  intakeRight.spin(forward, 127, volt);
+}else if(intakeCur == true){
+  intakeLeft.spin(forward, -10, volt);
+  intakeRight.spin(forward, -10, volt);  
+}
+else if(intakeCur == false){
+  intakeLeft.spin(forward, 0, volt);
+  intakeRight.spin(forward, 0, volt);  
+}else{
+  intakeLeft.spin(forward, -10, volt);
+  intakeRight.spin(forward, -10, volt);  
+}
 
-    // ........................................................................
-    // Insert user code here. This is where you use the joystick values to
-    // update your motors, etc.
-    // ........................................................................
+//////////////////Tray Encoder Stuff////////////////
+positionTray = trayMotor.position(degrees);
+errorTray = targetTray + positionTray;
+trayVoltage = (errorTray * kpTray);
 
-    wait(20, msec); // Sleep the task for a short amount of time to
-                    // prevent wasted resources.
+
+if(Controller1.ButtonDown.pressing()){
+  trayMotor.resetPosition();
+}
+
+///////////Tray Controls////////////
+
+
+    
+    wait(20, msec);
   }
 }
 
