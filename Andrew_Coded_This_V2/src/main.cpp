@@ -28,11 +28,7 @@ competition Competition;
 
 
 void pre_auton(void) {
-  // Initializing Robot Configuration. DO NOT REMOVE!
   vexcodeInit();
-
-  // All activities that occur before the competition starts
-  // Example: clearing encoders, setting servo positions, ...
 }
 
 
@@ -40,71 +36,106 @@ void autonomous(void) {
 
 }
 
-void usercontrol(void) {
+
+//////////////Variables And Functions for Driver Control/////////////////////
 
 bool intakeCur = true;
 bool scoreCur = false;
-int errorTray;
+int errorTray;  
 int trayVoltage = 0;
 double kpTray = -.4175;
 int targetTray = -450;
 int positionTray;
 
-
-
-
-
-while (1) {
-/////////////////INTAKE CONTROLS//////////////////
-if(Controller1.ButtonR2.pressing()){
-  //Intake
+void intake(){
   intakeLeft.spin(forward, -127, volt);
   intakeRight.spin(forward, -127, volt);
-}else if (Controller1.ButtonR1.pressing()){
-  //outTake
+}
+void outtake(){
   intakeLeft.spin(forward, 127, volt);
   intakeRight.spin(forward, 127, volt);
-}else if(intakeCur == true){
-  intakeLeft.spin(forward, -10, volt);
-  intakeRight.spin(forward, -10, volt);  
-}else if(intakeCur == false){
-  intakeLeft.spin(forward, 0, volt);
-  intakeRight.spin(forward, 0, volt);  
-}else{
-  intakeLeft.spin(forward, -10, volt);
-  intakeRight.spin(forward, -10, volt);  
 }
-
-
-//////////////////Tray Encoder Stuff////////////////
-positionTray = trayMotor.position(degrees);
-errorTray = targetTray + positionTray;
-trayVoltage = (errorTray * kpTray);
-
-
-if(Controller1.ButtonDown.pressing()){
+void intakeCurOn(){
+  intakeLeft.spin(forward, -10, volt);
+  intakeRight.spin(forward, -10, volt);
+}
+void intakeCurOff(){
+  intakeLeft.spin(forward, 0, volt);
+  intakeRight.spin(forward, 0, volt); 
+}
+void trayCalculations(){
+  positionTray = trayMotor.position(degrees);
+  errorTray = targetTray + positionTray;
+  trayVoltage = (errorTray * kpTray);
+}
+void resetTrayEncoder(){
   trayMotor.resetPosition();
 }
-
-///////////Tray Controls////////////
-
-if(Controller1.ButtonL1.pressing()){
+void trayUp(){
   scoreCur = true;
   trayMotor.spin(forward, trayVoltage, volt);
-}else if(Controller1.ButtonL2.pressing()){
+}
+void trayDown(){
   scoreCur = false;
   trayMotor.spin(forward, -127, volt);
-}else{
+}
+void trayDownCur(){
   trayMotor.spin(forward, -5, volt);
   scoreCur = false;
 }
+void armUp(){
+  armMotor.spin(forward, 127, volt);
+  intakeCur = false;
+}
+void armDown(){
+  armMotor.spin(forward, -127, volt);
+  intakeCur = true;
+}
+void armCurUp(){
+  
+}
+
+
+//////////////END OF Variables And Functions for Driver Control/////////////////////
+
+
+void usercontrol(void) {
+while (1) {
+/////////////////INTAKE CONTROLS//////////////////
+if(Controller1.ButtonR2.pressing()){
+  intake();
+}else if(Controller1.ButtonR1.pressing()){
+  outtake();
+}else if(intakeCur == true){
+  intakeCurOn();  
+}else if(intakeCur == false){
+  intakeCurOff(); 
+}else{
+  intakeCurOn();
+}
+
+//////Run Tray Calculations///////////
+trayCalculations();
+
+////////Manual Tray Reset Button///////
+if(Controller1.ButtonDown.pressing()){
+resetTrayEncoder();
+}
+
+///////////Tray Controls////////////
+if(Controller1.ButtonL1.pressing()){
+  trayUp();
+}else if(Controller1.ButtonL2.pressing()){
+  trayDown();
+}else{
+  trayDownCur();
+}
 
 ///////////Arm Controls///////////////
-
 if(Controller1.ButtonX.pressing()){
-
+armUp();
 }else if (Controller1.ButtonB.pressing()){
-
+armDown();
 }else{
   if(armMotor.position(degrees) > 10){
     armMotor.spin(forward, 10, volt);
