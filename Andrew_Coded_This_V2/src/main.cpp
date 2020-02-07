@@ -50,6 +50,8 @@ double kpTray = -.4175;
 int targetTray = -450;
 int positionTray;
 
+
+
 while (1) {
 /////////////////INTAKE CONTROLS//////////////////
 if(Controller1.ButtonR2.pressing()){
@@ -70,6 +72,7 @@ if(Controller1.ButtonR2.pressing()){
   intakeLeft.spin(forward, -10, volt);
   intakeRight.spin(forward, -10, volt);  
 }
+
 
 //////////////////Tray Encoder Stuff////////////////
 positionTray = trayMotor.position(degrees);
