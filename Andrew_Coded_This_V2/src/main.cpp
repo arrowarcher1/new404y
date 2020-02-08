@@ -92,7 +92,10 @@ void armDown(){
   intakeCur = true;
 }
 void armCurUp(){
-  
+  armMotor.spin(forward, 10, volt);
+}
+void armCurDown(){
+  armMotor.spin(forward, -5, volt);
 }
 
 
@@ -138,9 +141,9 @@ armUp();
 armDown();
 }else{
   if(armMotor.position(degrees) > 10){
-    armMotor.spin(forward, 10, volt);
+    armCurUp();
   }else{
-    armMotor.spin(forward, -5, volt);
+    armCurDown();
   }}
 
 
