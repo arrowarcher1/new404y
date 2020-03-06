@@ -26,13 +26,53 @@ competition Competition;
 
 // define your global insta nces of motors and other devices here
 
+  bool blueSide = true;
+  bool redSide;
+  bool protectedSide;
+  bool unProtectedSide;
 
 void pre_auton(void) {
   vexcodeInit();
+
+  //// Controller Based Auton Selection, Changes variable based on input
+  
+  if(Controller1.ButtonA.pressing()){
+    blueSide = true;
+    redSide = false;
+    Controller1.Screen.clearLine(2); 
+
+    Controller1.rumble(rumbleShort); 
+  }else if(Controller1.ButtonB.pressing()){
+    redSide = true;
+    blueSide = false;
+    Controller1.Screen.clearLine(2); 
+
+    Controller1.rumble(rumbleShort); 
+  }else if(Controller1.ButtonLeft.pressing()){
+    protectedSide = true;
+    unProtectedSide = false;
+    Controller1.rumble(rumbleShort); 
+  }else if(Controller1.ButtonRight.pressing()){
+    unProtectedSide = true;
+    protectedSide = false;
+    Controller1.rumble(rumbleShort); 
+  }
 }
 
 
 void autonomous(void) {
+if(blueSide == true && protectedSide == true){
+  //Run Blue Protected Side Code
+}
+if(blueSide == true && unProtectedSide == true){
+  //Run Blue Unprotected Side Code
+}
+if(redSide == true && protectedSide == true){
+  //Run Red Protected Side Code
+}
+if(redSide == true && unProtectedSide == true){
+  //Run Red UnProtected Side Code
+}
 
 }
 
