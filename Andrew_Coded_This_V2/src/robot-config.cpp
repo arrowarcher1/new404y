@@ -18,8 +18,8 @@ motor_group RightDriveSmart = motor_group(rightMotorA, rightMotorB);
 
 drivetrain Drivetrain = drivetrain(LeftDriveSmart, RightDriveSmart, 319.19, 330.2, 165.1, mm, 1);
 controller Controller1 = controller(primary);
-motor intakeRight = motor(PORT4, ratio36_1, true);
-motor intakeLeft = motor(PORT9, ratio36_1, false);
+motor intakeRight = motor(PORT4, ratio36_1, false);
+motor intakeLeft = motor(PORT9, ratio36_1, true);
 motor armMotor = motor(PORT10, ratio36_1, true);
 motor trayMotor = motor(PORT8, ratio36_1, true);
 

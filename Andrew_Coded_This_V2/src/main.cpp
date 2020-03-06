@@ -48,16 +48,16 @@ int targetTray = -450;
 int positionTray;
 
 void intake(){
-  intakeLeft.spin(forward, -127, volt);
-  intakeRight.spin(forward, -127, volt);
+  intakeLeft.spin(forward, -12, volt);
+  intakeRight.spin(forward, -12, volt);
 }
 void outtake(){
-  intakeLeft.spin(forward, 127, volt);
-  intakeRight.spin(forward, 127, volt);
+  intakeLeft.spin(forward, 12, volt);
+  intakeRight.spin(forward, 12, volt);
 }
 void intakeCurOn(){
-  intakeLeft.spin(forward, -10, volt);
-  intakeRight.spin(forward, -10, volt);
+  intakeLeft.spin(forward, -1, volt);
+  intakeRight.spin(forward, -1, volt);
 }
 void intakeCurOff(){
   intakeLeft.spin(forward, 0, volt);
@@ -77,25 +77,25 @@ void trayUp(){
 }
 void trayDown(){
   scoreCur = false;
-  trayMotor.spin(forward, -127, volt);
+  trayMotor.spin(forward, -12, volt);
 }
 void trayDownCur(){
-  trayMotor.spin(forward, -5, volt);
+  trayMotor.spin(forward, -2, volt);
   scoreCur = false;
 }
 void armUp(){
-  armMotor.spin(forward, 127, volt);
+  armMotor.spin(forward, 12, volt);
   intakeCur = false;
 }
 void armDown(){
-  armMotor.spin(forward, -127, volt);
+  armMotor.spin(forward, -12, volt);
   intakeCur = true;
 }
 void armCurUp(){
-  armMotor.spin(forward, 10, volt);
+  armMotor.spin(forward, 1, volt);
 }
 void armCurDown(){
-  armMotor.spin(forward, -5, volt);
+  armMotor.spin(forward, -2, volt);
 }
 
 
