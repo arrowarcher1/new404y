@@ -26,7 +26,7 @@ competition Competition;
 
 // define your global insta nces of motors and other devices here
 
-  bool blueSide = true;
+  bool blueSide;
   bool redSide;
   bool protectedSide;
   bool unProtectedSide;
@@ -35,26 +35,56 @@ void pre_auton(void) {
   vexcodeInit();
 
   //// Controller Based Auton Selection, Changes variable based on input
-  
+    Controller1.Screen.setCursor(1, 2);
+    Controller1.Screen.print("BLUE SIDE");
+    Controller1.Screen.setCursor(1, 10);
+    Controller1.Screen.print("RED SIDE");
+    Controller1.Screen.setCursor(4, 2);
+    Controller1.Screen.print("Protected");
+    Controller1.Screen.setCursor(4, 10);
+    Controller1.Screen.print("unProtected");
+
   if(Controller1.ButtonA.pressing()){
     blueSide = true;
     redSide = false;
-    Controller1.Screen.clearLine(2); 
-
+    Controller1.Screen.clearLine(2);
+    Controller1.Screen.setCursor(2, 2);
+    Controller1.Screen.print(blueSide);
+    Controller1.Screen.setCursor(2, 10);
+    Controller1.Screen.print(redSide);    
     Controller1.rumble(rumbleShort); 
-  }else if(Controller1.ButtonB.pressing()){
+  }
+  if(Controller1.ButtonB.pressing()){
     redSide = true;
     blueSide = false;
-    Controller1.Screen.clearLine(2); 
-
+    Controller1.Screen.clearLine(2);
+    Controller1.Screen.setCursor(2, 2);
+    Controller1.Screen.print(blueSide);
+    Controller1.Screen.setCursor(2, 10);
+    Controller1.Screen.print(redSide);  
     Controller1.rumble(rumbleShort); 
-  }else if(Controller1.ButtonLeft.pressing()){
+
+  }
+  if(Controller1.ButtonLeft.pressing()){
     protectedSide = true;
     unProtectedSide = false;
+    Controller1.Screen.clearLine(4);
+    Controller1.Screen.setCursor(4, 2);
+    Controller1.Screen.print(protectedSide);
+    Controller1.Screen.setCursor(4, 10);
+    Controller1.Screen.print(unProtectedSide);
     Controller1.rumble(rumbleShort); 
-  }else if(Controller1.ButtonRight.pressing()){
+
+  }
+  if(Controller1.ButtonRight.pressing()){
     unProtectedSide = true;
     protectedSide = false;
+    Controller1.Screen.clearLine(4);
+    Controller1.Screen.setCursor(4, 2);
+    Controller1.Screen.print(protectedSide);
+    Controller1.Screen.setCursor(4, 10);
+    Controller1.Screen.print(unProtectedSide);
+    Controller1.rumble(rumbleShort); 
     Controller1.rumble(rumbleShort); 
   }
 }
@@ -73,7 +103,6 @@ if(redSide == true && protectedSide == true){
 if(redSide == true && unProtectedSide == true){
   //Run Red UnProtected Side Code
 }
-
 }
 
 
@@ -196,9 +225,6 @@ armDown();
 
 
 
-//
-// Main will set up the competition functions and callbacks.
-//
 int main() {
   // Set up callbacks for autonomous and driver control periods.
   Competition.autonomous(autonomous);
