@@ -85,28 +85,10 @@ void pre_auton(void) {
     Controller1.Screen.setCursor(4, 10);
     Controller1.Screen.print(unProtectedSide);
     Controller1.rumble(rumbleShort); 
-    Controller1.rumble(rumbleShort); 
   }
 }
 
-
-void autonomous(void) {
-if(blueSide == true && protectedSide == true){
-  //Run Blue Protected Side Code
-}
-if(blueSide == true && unProtectedSide == true){
-  //Run Blue Unprotected Side Code
-}
-if(redSide == true && protectedSide == true){
-  //Run Red Protected Side Code
-}
-if(redSide == true && unProtectedSide == true){
-  //Run Red UnProtected Side Code
-}
-}
-
-
-//////////////Variables And Functions for Driver Control/////////////////////
+//////////////Variables And Functions////////////////////
 
 bool intakeCur = true;
 bool scoreCur = false;
@@ -168,7 +150,69 @@ void armCurDown(){
 }
 
 
-//////////////END OF Variables And Functions for Driver Control/////////////////////
+//////////////END OF Variables And Functions/////////////////////
+
+
+void autonomous(void) {
+if(blueSide == true && protectedSide == true){
+  //Run Blue Protected Side Code
+}
+if(blueSide == true && unProtectedSide == true){
+  //Run Blue Unprotected Side Code
+}
+if(redSide == true && protectedSide == true){
+  //Run Red Protected Side Code
+
+  // Still need to code in tray deployment, but not sure how were going to fold up our tray yet //
+  intake();
+  Drivetrain.setDriveVelocity(90, pct);
+  Drivetrain.driveFor(forward, 11.5, inches);
+  Drivetrain.turnFor(-6, degrees);
+  Drivetrain.driveFor(forward, 24, inches);
+  Drivetrain.turnFor(-.5, degrees);
+  Drivetrain.driveFor(forward, 10.2, inches);
+  Drivetrain.turnFor(-89.1, degrees);
+  Drivetrain.driveFor(forward, 22.16, inches);
+  Drivetrain.turnFor(-90.8, degrees);
+  Drivetrain.driveFor(forward, 39.5, inches);
+  intakeCurOff(); // turns off intake, using a function from driver control
+  Drivetrain.turnFor(-45, degrees);
+  Drivetrain.driveFor(forward, 15.7, inches);
+  intakeLeft.spin(forward, 1, volt);
+  intakeRight.spin(forward, 1, volt);
+  trayMotor.setVelocity(70, pct);
+  trayMotor.spinFor(forward, 90, degrees);
+  wait(4, seconds);
+  Drivetrain.driveFor(reverse, 5, inches);
+
+}
+if(redSide == true && unProtectedSide == true){
+  //Run Red UnProtected Side Code
+
+  // Still need to code in tray deployment, but not sure how were going to fold up our tray yet //
+  intake();
+  Drivetrain.setDriveVelocity(90, pct);
+  Drivetrain.driveFor(forward, 37.2, inches);
+  Drivetrain.turnFor(-42.9, degrees);
+  Drivetrain.driveFor(forward, 15.72, inches);
+  intakeCurOff(); // turns off intake, using a function from driver control
+  Drivetrain.driveFor(reverse, 15.72, inches);
+  Drivetrain.turnFor(-155.2, degrees);
+  Drivetrain.driveFor(forward, 24, inches);
+  Drivetrain.setDriveVelocity(60, pct);
+  Drivetrain.driveFor(forward, 24, inches);
+  intakeLeft.spin(forward, 1, volt);
+  intakeRight.spin(forward, 1, volt);
+  trayMotor.setVelocity(70, pct);
+  trayMotor.spinFor(forward, 90, degrees);  
+  wait(4, seconds);
+  Drivetrain.driveFor(reverse, 5, inches);
+
+}
+
+}
+
+
 
 
 void usercontrol(void) {
